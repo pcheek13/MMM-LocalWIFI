@@ -51,3 +51,32 @@ Add the module to the `modules` array of your `config/config.js`:
 ## Notes
 - Changing Wi-Fi requires network permissions. Ensure the MagicMirror process has rights to run `nmcli` (e.g., via `sudoers` if necessary).
 - The module reads connectivity by parsing `nmcli` output. If you use a different network manager, adapt `wifiInterface` or extend the helper accordingly.
+
+## Granting `nmcli` permissions to MagicMirror
+If the Wi-Fi icon shows permission errors or status never updates, give the MagicMirror user passwordless access to `nmcli`:
+
+1. Confirm the user that runs MagicMirror (often `pi`, `mm`, or `magicmirror`).
+2. Create a sudoers drop-in that lets that user run `nmcli` without a password:
+   ```bash
+   sudo visudo -f /etc/sudoers.d/magicmirror-nmcli
+   ```
+   Add this line (replace `pi` with your user):
+   ```
+   pi ALL=(ALL) NOPASSWD: /usr/bin/nmcli
+   ```
+3. If your distro uses PolicyKit for NetworkManager, add a polkit rule instead (replace `pi` with your user):
+   ```bash
+   cat <<'EOF' | sudo tee /etc/polkit-1/rules.d/49-nmcli-magicmirror.rules
+   polkit.addRule(function(action, subject) {
+     if (action.id == "org.freedesktop.NetworkManager.settings.modify.system" &&
+         subject.isInGroup("sudo") && subject.user == "pi") {
+       return polkit.Result.YES;
+     }
+   });
+   EOF
+   ```
+4. Restart MagicMirror so the helper inherits the new permissions:
+   ```bash
+   pm2 restart mm || sudo systemctl restart magicmirror || true
+   ```
+5. Tap the Wi-Fi icon again; connection attempts should now succeed without prompting for a password.

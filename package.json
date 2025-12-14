@@ -9,5 +9,10 @@
     "url": "https://github.com/pcheek13/MMM-LocalWIFI.git"
   },
   "license": "MIT",
-  "dependencies": {}
+  "scripts": {
+    "test": "node test/render.js"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.4"
+  }
 }
