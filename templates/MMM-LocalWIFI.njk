@@ -1,7 +1,17 @@
 <div id="localwifi-wrapper" class="localwifi">
-  <div class="wifi-icon {{ status.online ? 'online' : 'offline' }}" title="{{ status.ssid ? 'Connected to ' + status.ssid : 'Not connected' }}">
-    <span class="wifi-symbol">{{ status.online ? '📶' : '📡' }}</span>
-    <span class="wifi-state">{{ status.online ? 'Online' : 'Offline' }}</span>
+  <div class="wifi-icon {% if status.online %}online{% else %}offline{% endif %}" title="{% if status.ssid %}Connected to {{ status.ssid }}{% else %}Not connected{% endif %}">
+    <span class="wifi-symbol" aria-hidden="true">
+      <svg viewBox="0 0 64 64" class="wifi-svg" role="presentation">
+        <path class="arc arc-1" d="M8 28c8-8 40-8 48 0" />
+        <path class="arc arc-2" d="M16 36c6-6 26-6 32 0" />
+        <path class="arc arc-3" d="M24 44c4-4 12-4 16 0" />
+        <circle class="dot" cx="32" cy="52" r="3.5" />
+        {% if not status.online %}
+        <line class="slash" x1="14" y1="50" x2="50" y2="14" />
+        {% endif %}
+      </svg>
+    </span>
+    <span class="wifi-state">{% if status.online %}Online{% else %}Offline{% endif %}</span>
   </div>
   {% if showPanel %}
   <div class="wifi-panel">
@@ -11,11 +21,11 @@
     </div>
     <div class="input-row">
       <label for="wifi-ssid">SSID</label>
-      <input id="wifi-ssid" class="input-field {{ focusedField == 'ssid' ? 'focused' : '' }}" data-field="ssid" type="text" placeholder="Network name" value="{{ inputs.ssid }}" readonly>
+      <input id="wifi-ssid" class="input-field {% if focusedField == 'ssid' %}focused{% endif %}" data-field="ssid" type="text" placeholder="Network name" value="{{ inputs.ssid }}" readonly>
     </div>
     <div class="input-row">
       <label for="wifi-password">Password</label>
-      <input id="wifi-password" class="input-field {{ focusedField == 'password' ? 'focused' : '' }}" data-field="password" type="{{ showPassword ? 'text' : 'password' }}" placeholder="Network password" value="{{ inputs.password }}" readonly>
+      <input id="wifi-password" class="input-field {% if focusedField == 'password' %}focused{% endif %}" data-field="password" type="{% if showPassword %}text{% else %}password{% endif %}" placeholder="Network password" value="{{ inputs.password }}" readonly>
     </div>
     <div class="keypad">
       <div class="keypad-row">

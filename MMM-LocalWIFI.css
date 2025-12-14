@@ -23,7 +23,25 @@
 }
 
 .wifi-icon .wifi-symbol {
-  font-size: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.wifi-icon .wifi-svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wifi-icon.offline .wifi-svg .slash {
+  stroke: #ff8a80;
 }
 
 .wifi-icon.online {

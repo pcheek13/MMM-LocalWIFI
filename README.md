@@ -3,11 +3,13 @@
 A MagicMirror² module that shows current Wi-Fi connectivity and lets you change the active network directly from the mirror using a full on-screen QWERTY keypad. The Wi-Fi symbol changes state when offline and opens a configuration panel when selected.
 
 ## How it interacts with the computer
-- The MagicMirror front-end sends `GET_STATUS` and `SET_WIFI` socket notifications to the module's `node_helper.js`.
-- The helper calls `nmcli` via `child_process.exec` to read adapter status (`nmcli -t -f WIFI g`) and the active SSID (`nmcli -t -f active,ssid dev wifi`).
-- When you press **Connect**, the helper runs `nmcli device wifi connect ... ifname <interface>` with the SSID/password you typed to instruct NetworkManager to switch the Raspberry Pi's Wi-Fi.
-- Returned `nmcli` output (success or stderr) is bubbled back to the UI so the mirror shows whether the computer actually connected.
-- Because the helper shells out to `nmcli`, ensure the MagicMirror process user has permission to manage networking (e.g., in `sudoers` if needed on your Pi).
+This module talks directly to the Raspberry Pi’s NetworkManager through `nmcli` so it can read and change the Wi-Fi configuration without any extra services.
+
+- **Front-end → helper:** The MagicMirror browser process sends socket notifications (`GET_STATUS` to poll and `SET_WIFI` when you tap **Connect**) to `node_helper.js`.
+- **Helper → operating system:** The helper shells out to `nmcli -t -f WIFI g` to check if Wi-Fi hardware is enabled and `nmcli -t -f active,ssid dev wifi` to discover the currently active SSID. On connect, it executes `nmcli device wifi connect '<ssid>' password '<pass>' ifname '<interface>'` (password omitted if blank) so NetworkManager immediately switches the Pi’s Wi-Fi.
+- **Operating system → helper → UI:** Standard output or error output from `nmcli` is relayed back through a `WIFI_UPDATE_RESULT` notification. Success shows up as a confirmation message; errors (wrong password, AP unreachable, permissions) render inline so you can see why the computer refused the change.
+
+Because the helper executes `nmcli`, the MagicMirror process user must be allowed to manage networking (often via `sudoers` on Raspberry Pi OS). The module itself stores only the in-session values you type; credentials are handed straight to `nmcli` and not saved elsewhere in the code.
 
 ## Features
 - Wi-Fi status icon that clearly shows online/offline state.
