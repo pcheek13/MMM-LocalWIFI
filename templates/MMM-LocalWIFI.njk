@@ -1,0 +1,58 @@
+<div id="localwifi-wrapper" class="localwifi">
+  <div class="wifi-icon {{ status.online ? 'online' : 'offline' }}" title="{{ status.ssid ? 'Connected to ' + status.ssid : 'Not connected' }}">
+    <span class="wifi-symbol">{{ status.online ? '📶' : '📡' }}</span>
+    <span class="wifi-state">{{ status.online ? 'Online' : 'Offline' }}</span>
+  </div>
+  {% if showPanel %}
+  <div class="wifi-panel">
+    <div class="wifi-status">
+      <div class="status-label">Current network:</div>
+      <div class="status-value">{{ status.ssid or 'None' }}</div>
+    </div>
+    <div class="input-row">
+      <label for="wifi-ssid">SSID</label>
+      <input id="wifi-ssid" class="input-field {{ focusedField == 'ssid' ? 'focused' : '' }}" data-field="ssid" type="text" placeholder="Network name" value="{{ inputs.ssid }}" readonly>
+    </div>
+    <div class="input-row">
+      <label for="wifi-password">Password</label>
+      <input id="wifi-password" class="input-field {{ focusedField == 'password' ? 'focused' : '' }}" data-field="password" type="{{ showPassword ? 'text' : 'password' }}" placeholder="Network password" value="{{ inputs.password }}" readonly>
+    </div>
+    <div class="keypad">
+      <div class="keypad-row">
+        {% for char in keypadLayout.top %}
+        <button class="keypad-key" data-value="{{ char }}">{{ char }}</button>
+        {% endfor %}
+      </div>
+      <div class="keypad-row">
+        {% for char in keypadLayout.upper %}
+        <button class="keypad-key" data-value="{{ char }}">{{ char }}</button>
+        {% endfor %}
+      </div>
+      <div class="keypad-row">
+        {% for char in keypadLayout.home %}
+        <button class="keypad-key" data-value="{{ char }}">{{ char }}</button>
+        {% endfor %}
+      </div>
+      <div class="keypad-row">
+        {% for char in keypadLayout.bottom %}
+        <button class="keypad-key" data-value="{{ char }}">{{ char }}</button>
+        {% endfor %}
+      </div>
+      <div class="keypad-row symbols">
+        {% for char in keypadLayout.symbols %}
+        <button class="keypad-key" data-value="{{ char }}">{{ char }}</button>
+        {% endfor %}
+      </div>
+      <div class="keypad-row">
+        <button class="keypad-action" data-action="space">Space</button>
+        <button class="keypad-action" data-action="backspace">Backspace</button>
+        <button class="keypad-action" data-action="clear">Clear</button>
+      </div>
+    </div>
+    <div class="submit-row">
+      <button class="wifi-submit">Connect</button>
+      <span class="message">{{ message }}</span>
+    </div>
+  </div>
+  {% endif %}
+</div>

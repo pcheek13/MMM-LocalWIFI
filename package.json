@@ -1,0 +1,13 @@
+{
+  "name": "mmm-localwifi",
+  "version": "1.0.0",
+  "description": "MagicMirror module to view and configure local Wi-Fi connectivity with on-screen keypad.",
+  "main": "MMM-LocalWIFI.js",
+  "author": "pcheek13 <https://github.com/pcheek13>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pcheek13/MMM-LocalWIFI.git"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
