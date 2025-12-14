@@ -34,6 +34,21 @@ Module.register("MMM-LocalWIFI", {
     return "templates/MMM-LocalWIFI.njk";
   },
 
+  getDom() {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = this.renderTemplate();
+    return wrapper.firstElementChild || wrapper;
+  },
+
+  renderTemplate() {
+    try {
+      return this.nunjucksEnvironment().render(this.getTemplate(), this.getTemplateData());
+    } catch (error) {
+      console.error("MMM-LocalWIFI template render failed", error);
+      return `<div id="localwifi-wrapper" class="localwifi">Error loading Wi-Fi module</div>`;
+    }
+  },
+
   getTemplateData() {
     return {
       status: this.status,
