@@ -1,0 +1,158 @@
+.localwifi {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 240px;
+}
+
+.wifi-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wifi-icon .wifi-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.wifi-icon .wifi-svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wifi-icon.offline .wifi-svg .slash {
+  stroke: #ff8a80;
+}
+
+.wifi-icon.online {
+  background: rgba(76, 175, 80, 0.2);
+  color: #b6f2b8;
+}
+
+.wifi-icon.offline {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f9b0a9;
+}
+
+.wifi-icon .wifi-state {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.wifi-panel {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(2px);
+}
+
+.wifi-status {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.input-row label {
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.input-field {
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.input-field.focused {
+  border-color: #64b5f6;
+  box-shadow: 0 0 0 1px rgba(100, 181, 246, 0.4);
+}
+
+.keypad {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.keypad-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.keypad-key,
+.keypad-action,
+.wifi-submit {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.keypad-key:hover,
+.keypad-action:hover,
+.wifi-submit:hover {
+  background: rgba(100, 181, 246, 0.2);
+}
+
+.keypad-key:active,
+.keypad-action:active,
+.wifi-submit:active {
+  transform: scale(0.98);
+}
+
+.keypad-row.symbols .keypad-key {
+  flex: 1 0 auto;
+  min-width: 32px;
+}
+
+.submit-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.message {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
