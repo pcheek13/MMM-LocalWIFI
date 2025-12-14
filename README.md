@@ -2,6 +2,13 @@
 
 A MagicMirror² module that shows current Wi-Fi connectivity and lets you change the active network directly from the mirror using a full on-screen QWERTY keypad. The Wi-Fi symbol changes state when offline and opens a configuration panel when selected.
 
+## How it interacts with the computer
+- The MagicMirror front-end sends `GET_STATUS` and `SET_WIFI` socket notifications to the module's `node_helper.js`.
+- The helper calls `nmcli` via `child_process.exec` to read adapter status (`nmcli -t -f WIFI g`) and the active SSID (`nmcli -t -f active,ssid dev wifi`).
+- When you press **Connect**, the helper runs `nmcli device wifi connect ... ifname <interface>` with the SSID/password you typed to instruct NetworkManager to switch the Raspberry Pi's Wi-Fi.
+- Returned `nmcli` output (success or stderr) is bubbled back to the UI so the mirror shows whether the computer actually connected.
+- Because the helper shells out to `nmcli`, ensure the MagicMirror process user has permission to manage networking (e.g., in `sudoers` if needed on your Pi).
+
 ## Features
 - Wi-Fi status icon that clearly shows online/offline state.
 - Shows the connected SSID and whether Wi-Fi hardware is enabled.
@@ -15,7 +22,7 @@ A MagicMirror² module that shows current Wi-Fi connectivity and lets you change
 
 ## Installation (one copy/paste block)
 ```bash
-cd ~/MagicMirror/modules && git clone https://github.com/your-org/MMM-LocalWIFI.git && cd MMM-LocalWIFI && npm install
+cd ~/MagicMirror/modules && git clone https://github.com/pcheek13/MMM-LocalWIFI.git && cd MMM-LocalWIFI && npm install
 ```
 
 ## Configuration
