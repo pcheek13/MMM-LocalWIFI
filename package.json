@@ -1,0 +1,9 @@
+{
+  "name": "mmm-localwifi",
+  "version": "1.0.0",
+  "description": "MagicMirror module to view and configure local Wi-Fi connectivity with on-screen keypad.",
+  "main": "MMM-LocalWIFI.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}
